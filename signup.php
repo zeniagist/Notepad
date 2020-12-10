@@ -105,7 +105,7 @@ if(!$result){
 
 //        Send the user an email with a link to activate.php with their email and activation code
 $message = "Please click on this link to activate your account: \n\n";
-$message = "http://zeniagist.com/projects/onlinenotesapp/activate.php?email=" . urlencode($email) . "&key=$activationKey";
+$message .= "http://zeniagist.com/projects/onlinenotesapp/activate.php?email=" . urlencode($email) . "&key=$activationKey";
 $emailSent = mail($email, 'Confirm you Registration', $message, 'From:' . 'developmentisland@gmail.com');
 
 if($emailSent){
