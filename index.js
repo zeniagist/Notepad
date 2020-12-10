@@ -25,8 +25,7 @@ $("#signupform").submit(function(event){
     }
   });
 });  
-    
-    
+        
          
         
 // AJAX Call for the login form
