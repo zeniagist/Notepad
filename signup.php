@@ -90,4 +90,16 @@ if($results){
   exit;
 }
 
+//        Create a unique activation code
+$activationKey = bin2hex(openssl_random_pseudo_bytes(16));
+
+// Insert user details and activation code in the users table
+$sql = "INSERT INTO users (username, email, password, activation) VALUES ('".$_POST["username"]."', '".$_POST["email"]."', 'Password2020', '$activationKey')";
+$result = mysqli_query($link, $sql);
+if(!$result){
+  echo '<div class="alert alert-danger">There was an error inserting the user details in the database!</div>';
+  exit; 
+}
+}
+
 ?>
