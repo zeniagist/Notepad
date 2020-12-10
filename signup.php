@@ -60,6 +60,8 @@ if($errors){
 $username = mysqli_real_escape_string($link, $username);
 $email = mysqli_real_escape_string($link, $email);
 $password = mysqli_real_escape_string($link, $password);
+// hash password
+$password = md5($password);
 
 //   Username exists in the users table print error
 $sql = "SELECT * FROM users WHERE username = '$username'";
