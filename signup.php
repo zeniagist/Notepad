@@ -54,6 +54,40 @@ if($errors){
   echo $resultMessage;
 }
 
+//No errors
+
+//Prepare variables for the queries
+$username = mysqli_real_escape_string($link, $username);
+$email = mysqli_real_escape_string($link, $email);
+$password = mysqli_real_escape_string($link, $password);
+
+//   Username exists in the users table print error
+$sql = "SELECT * FROM users WHERE username = '$username'";
+$result = mysqli_query($link, $sql);
+if(!$result){
+  echo '<div class="alert alert-danger">Error running the query!</div>';
+  // echo '<div class="alert alert-danger">' . mysqli_error($link) . '</div>';
+  exit;
+}
+$results = mysqli_num_rows($result);
+
+if($results){
+  echo '<div class="alert alert-danger">That username is already registered. Do you want to log in?</div>';
+  exit;
+}
+
+//    mail exists in the users table print error
+$sql = "SELECT * FROM users WHERE email = '$email'";
+$result = mysqli_query($link, $sql);
+if(!$result){
+  echo '<div class="alert alert-danger">Error running the query!</div>';
+  exit;
+}
+$results = mysqli_num_rows($result);
+
+if($results){
+  echo '<div class="alert alert-danger">That email is already registered. Do you want to log in?</div>';
+  exit;
+}
 
 ?>
-
