@@ -100,6 +100,14 @@ if(!$result){
   echo '<div class="alert alert-danger">There was an error inserting the user details in the database!</div>';
   exit; 
 }
+
+//        Send the user an email with a link to activate.php with their email and activation code
+$message = "Please click on this link to activate your account: \n\n";
+$message = "http://zeniagist.com/projects/onlinenotesapp/activate.php?email=" . urlencode($email) . "&key=$activationKey";
+$emailSent = mail($email, 'Confirm you Registration', $message, 'From:' . 'developmentisland@gmail.com');
+
+if($emailSent){
+  echo "<div class='alert alert-success'>Thank you for registering! A confirmation email has been sent to $email. Please click on the activiation link to activate your account.</div>";
 }
 
 ?>
