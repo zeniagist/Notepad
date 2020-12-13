@@ -2,6 +2,9 @@
 //Start session
 session_start();
 
+//logout
+include("logout.php");
+
 //Connect to the database
 include("connection.php");
 
