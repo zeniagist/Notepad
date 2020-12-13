@@ -6,7 +6,7 @@ session_start();
 include('connection.php');
 
 //Check user inputs
-//echo "hello";
+// echo "successful";
 
 //Define error messages
 $missingEmail='<p><strong>Please enter your email address!</strong></p>';
@@ -31,22 +31,51 @@ if($errors){
   $resultMessage = '<div class="alert alert-danger">' . $errors . '</div>';
   echo $resultMessage;
 }else{
+  //Prepare variables for the query  
+  $email = mysqli_real_escape_string($link, $email);
+  $password = mysqli_real_escape_string($link, $password);
+  // hash password
+  $password = hash('sha256', $password);
+  
+  //Run query: Check combination of email & password exists
+  $sql = "SELECT * FROM users WHERE email='$email' AND password='$password' AND activation='activated'";
+  $result = mysqli_query($link, $sql);
+
+  if(!$result){
+    echo '<div class="alert alert-danger">Error running the query!</div>';
+    echo '<div class="alert alert-danger">' . mysqli_error($link) . '</div>';
+    exit;
+  }
+
+  //If email & password don't match print error
+  $count = mysqli_num_rows($result);
+
+  if($count == 1){
+    echo '<div class="alert alert-danger">Wrong username and password combination</div>';
+  }else{
+    //log the user in: Set session variables
+    $row = mysqli_fetch_array($result, MYSQLI_NUM);
+  //   $_SESSION['user_id'=$row['user_id']];
+  //   $_SESSION['username'=$row['username']];
+  //   $_SESSION['email'=$row['email']];
+
+    //If remember me is not checked print "success"
+    if(!$_POST['rememberme']){
+      echo "success";
+    }
+  }
 }
 
-//Run query: Check combination of email & password exists
 
-//If email & password don't match print error
-  //log the user in: Set session variables
-  //If remember me is not checked print "success"
 
    
-                //Create two variables $authentificator1 and $authentificator2
-                //Store them in a cookie
-                //Run query to store them in rememberme table
-                //If query unsuccessful
-                    //print error
-                //else
-                    //print success
+//Create two variables $authentificator1 and $authentificator2
+//Store them in a cookie
+//Run query to store them in rememberme table
+//If query unsuccessful
+//print error
+//else
+//print success
 
 
 ?>
