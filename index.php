@@ -184,7 +184,7 @@
 
               <div class="modal-body">
                 
-              <div id="loginMessage">
+              <div id="forgotpasswordmessage">
                 <!-- Forgot Password message from PHP File -->
               </div>
                 <div class="form-group">
