@@ -8,7 +8,7 @@ include('connection.php');
 //Check user inputs
 // echo "successful";
 
-//Define error messages
+//Define errors message
 $missingEmail='<p><strong>Please enter your email address!</strong></p>';
 $missingPassword='<p><strong>Please enter your password!</strong></p>';
 
