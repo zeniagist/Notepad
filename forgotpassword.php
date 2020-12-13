@@ -1,4 +1,4 @@
-<!--Start session-->
+//Start session
 <!--Connect to the database-->
 
 <!--Check user inputs-->
