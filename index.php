@@ -1,3 +1,14 @@
+<?php
+//Start session
+session_start();
+
+//Connect to the database
+include("connection.php");
+
+// rememberme
+include("rememberme.php");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
