@@ -71,7 +71,7 @@
 
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="#">Logged in as <b>username</b></a></li>
-                <li><a href="#">Log out</a></li>
+                <li><a href="index.php?logout=1">Log out</a></li>
             </ul>
 
           </div>
