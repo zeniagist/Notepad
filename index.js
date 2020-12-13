@@ -24,11 +24,36 @@ $("#signupform").submit(function(event){
       $("#signupmessage").html("<div class='alert alert-danger'>There was an error with the AJAX Call. Please try again later</div>");
     }
   });
-});  
-        
-         
-        
+});
+
 // AJAX Call for the login form
+$("#loginform").submit(function(event){
+  //prevent default php processing
+  event.preventDefault();
+
+  //collect user inputs
+  var datatopost = $(this).serializeArray();
+  console.log(datatopost);
+
+  //send them to signup.php using AJAX
+  $.ajax({
+    url: "login.php",
+    type: "POST",
+    data: datatopost,
+    // AJAX Call successful
+    success: function(data){
+      if(data == "success"){
+        window.location = "mainpageloggedin.php";
+      }else{
+        $('#loginMessage').html(data);
+      }
+    },
+    // AJAX Call fails: show error AJAX Call error
+    error: function(){
+      $("#loginMessage").html("<div class='alert alert-danger'>There was an error with the AJAX Call. Please try again later</div>");
+    }
+  });
+});  
 // Once the form is submitted
     // prevent default php processing
     // collect user inputs
