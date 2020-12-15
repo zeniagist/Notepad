@@ -76,21 +76,52 @@ include('connection.php');
 
           // print reset password form with hidden user_id and key fields
           echo "
-          <form>
-          
+          <form method='post' id='passwordreset'>
+            <input type='hidden' name='key' value='$key'>
+            <input type='hidden' name='user_id' value='$user_id'>
+
+            <div class='form-group'>
+              <label for='password'>Enter your new Password</label>
+              <input type='password' name='password' id='password' placeholder='Enter Password' class='form-control'>
+
+              <label for='password2'>Re-enter Password</label>
+              <input type='password' name='password2' id='password2' placeholder='Re-enter Password' class='form-control'>
+
+              <input type='submit' name='resetpassword' class='btn btn-lg btn-success' value='Reset Password'>
+
+            </div>
           </form>
           ";
-
-          // script for AJAX Call to storepassword.php
           ?>
         </div>
       </div>
     </div>
+    
+    <!-- script for AJAX Call to storeresetpassword.php -->
+    <script>
+      $("#passwordreset").submit(function(event){
+        //prevent default php processing
+        event.preventDefault();
 
+        //collect user inputs
+        var datatopost = $(this).serializeArray();
+
+        //send them to forgotpassword.php using AJAX
+        $.ajax({
+          url: "storeresetpassword.php",
+          type: "POST",
+          data: datatopost,
+          // AJAX Call successful
+          success: function(data){
+            $('#resultmessage').html(data);
+          },
+          // AJAX Call fails: show error AJAX Call error
+          error: function(){
+            $("#resultmessage").html("<div class='alert alert-danger'>There was an error with the AJAX Call. Please try again later</div>");
+          }
+        });
+      });  
+    </script>
+    
   </body>
 </html>
-
-
-  
-
-  
