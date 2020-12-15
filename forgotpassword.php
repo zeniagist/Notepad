@@ -33,17 +33,40 @@ if(!$result){
   echo '<div class="alert alert-danger">Error running the query!</div>';
   exit;
 }
-$results = mysqli_num_rows($result);
+$count = mysqli_num_rows($result);
 
-if(!$results){
+if(!$count){
   echo '<div class="alert alert-danger">That email is not associated with a user. Would you like to register an account?</div>';
   exit;
 }
 
-  //Create a unique activation code
-  //Insert user details and activation code in the forgotpassword table
-  //Send email with link to resetpassword.php with user id and activiaton code
-  //If email sent successfully
-      //print success message
+// get user_id
+$row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+$user_id = $row['user_id'];
+
+//Create a unique activation code
+$key = bin2hex(openssl_random_pseudo_bytes(16));
+
+//Insert user details and activation code in the forgotpassword table
+$time = time();
+$status = 'pending';
+$sql = "INSERT INTO forgotpassword (user_id, rkey, time, status) VALUES ('$user_id', '$key', '$time', '$status')";
+
+// check if details were updated
+$result = mysqli_query($link, $sql);
+if(!$result){
+  echo '<div class="alert alert-danger">There was an error inserting the user details in the database!</div>';
+  exit; 
+}
+
+//Send email with link to resetpassword.php with user id and activiaton code
+$message = "Please click on this link to reset your password: \n\n";
+$message .= "Do not reply to this email \n\n";
+$message .= "http://zeniagist.com/projects/onlinenotesapp/resetpassword.php?user_id=$user_id&key=$key";
+$emailSent = mail($email, 'Reset your password', $message, 'From:' . 'no-reply@zeniagist.com');
+
+if($emailSent){
+  echo "<div class='alert alert-success'>An email has been sent to $email. Please check on the link to reset password</div>";
+}
 
 ?>
