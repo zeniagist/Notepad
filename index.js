@@ -6,7 +6,7 @@ $("#signupform").submit(function(event){
 
   //collect user inputs
   var datatopost = $(this).serializeArray();
-  console.log(datatopost);
+  // console.log(datatopost);
 
   //send them to signup.php using AJAX
   $.ajax({
@@ -33,9 +33,8 @@ $("#loginform").submit(function(event){
 
   //collect user inputs
   var datatopost = $(this).serializeArray();
-  console.log(datatopost);
 
-  //send them to signup.php using AJAX
+  //send them to login.php using AJAX
   $.ajax({
     url: "login.php",
     type: "POST",
@@ -54,19 +53,27 @@ $("#loginform").submit(function(event){
     }
   });
 });  
-// Once the form is submitted
-    // prevent default php processing
-    // collect user inputs
-    // send them to login.php using AJAX
-        // AJAX Call successful
-            // if php files returns "success": redirect the user to notes page
-            // otherwise show error message
-        // AJAX Call fails: show AJAX Call error
         
 // AJAX Call for the forgot password form
-// Once the form is submitted
-    // prevent default php processing
-    // collect user inputs
-    // send them to login.php using AJAX
-        // AJAX Call successful: show error or success message
-        // AJAX Call fails: show AJAX Call error
+$("#forgotpasswordform").submit(function(event){
+  //prevent default php processing
+  event.preventDefault();
+
+  //collect user inputs
+  var datatopost = $(this).serializeArray();
+
+  //send them to forgotpassword.php using AJAX
+  $.ajax({
+    url: "forgotpassword.php",
+    type: "POST",
+    data: datatopost,
+    // AJAX Call successful
+    success: function(data){
+      $('#forgotpasswordmessage').html(data);
+    },
+    // AJAX Call fails: show error AJAX Call error
+    error: function(){
+      $("#forgotpasswordmessage").html("<div class='alert alert-danger'>There was an error with the AJAX Call. Please try again later</div>");
+    }
+  });
+});  
