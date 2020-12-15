@@ -20,16 +20,26 @@ if(!$_POST["forgotemail"]){
 if($errors){
   $resultMessage = '<div class="alert alert-danger">' . $errors . '</div>';
   echo $resultMessage;
+  exit;
 }
 
-//If there are any errors
-//print error message
-//else: No errors
 //Prepare variables for the query
-//Run query: Check if email exists in the user table
-//If email does not exist
-//print error message
-//else
+$email = mysqli_real_escape_string($link, $email);
+
+//email exists in the users table print error
+$sql = "SELECT * FROM users WHERE email = '$email'";
+$result = mysqli_query($link, $sql);
+if(!$result){
+  echo '<div class="alert alert-danger">Error running the query!</div>';
+  exit;
+}
+$results = mysqli_num_rows($result);
+
+if(!$results){
+  echo '<div class="alert alert-danger">That email is not associated with a user. Would you like to register an account?</div>';
+  exit;
+}
+
   //Create a unique activation code
   //Insert user details and activation code in the forgotpassword table
   //Send email with link to resetpassword.php with user id and activiaton code
