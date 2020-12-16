@@ -4,18 +4,25 @@
 <?php
 session_start();
 include('connection.php');
+// if user_id or reset key is missing
+// if(!$_POST['user_id'] || !$_POST['key']){
+//   echo '<div class="alert alert-danger">There was an error. Please click on the link you received by email\n\nPlease check your spam folder.</div>';
+//   exit;
+// }
 
 //Store them in two variables
 $user_id = $_POST['user_id'];
 $key = $_POST['key'];
-
+echo $user_id;
+echo $key;
 // define time variable: now minus 24 hours
 $time = time() - 86400;
 
 //Prepare variables for the query
 $user_id = mysqli_real_escape_string($link, $user_id);
 $key = mysqli_real_escape_string($link, $key);
-
+echo $user_id;
+echo $key;
 // Run query: check combination of user_id & key exists and less than 24 hour old
 $sql = "SELECT user_id FROM forgotpassword WHERE user_id='28' AND time > '$time'";
 $result = mysqli_query($link, $sql);
@@ -65,4 +72,21 @@ if($errors){
   echo $resultMessage;
   exit;
 }
+
+//Prepare variables for the queries
+$user_id = mysqli_real_escape_string($link, $user_id);
+$password = mysqli_real_escape_string($link, $password);
+// hash password
+$password = hash('sha256', $password);
+
+// Run query: check combination of user_id & key exists and less than 24 hour old
+$sql = "UPDATE users SET password='$password' WHERE user_id='$user_id'";
+$result = mysqli_query($link, $sql);
+
+if(!$result){
+  echo '<div class="alert alert-danger">There was a problem storing the new password!</div>';
+}else{
+  echo '<div class="alert alert-success">Your password has been updated successfully!<a href="index.php">Login</a></div>';
+}
+
 ?>
