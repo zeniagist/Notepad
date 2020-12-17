@@ -1,10 +1,11 @@
-// <?php
-// // when clicking log out reset session
-// session_start();
-// if(!$_SESSION['email']){
-//   header("location: index.php");
-// }
-// ?>
+<?php
+session_start();
+
+if(!$_SESSION['user_id']) {
+ header('Location: index.php');
+ exit;
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -71,14 +72,14 @@
 
           <div class="navbar-collapse collapse" id="navbarCollapse">
             <ul class="nav navbar-nav">
-              <li><a href="profile.php">Profile</a></li>
-              <li><a href="#">Help</a></li>
-              <li><a href="#">Contact Us</a></li>
               <li class="active"><a href="mainpageloggedin.php">My Notes</a></li>
+              <li><a href="profile.php">Profile</a></li>
+              <!--<li><a href="#">Help</a></li>-->
+              <!--<li><a href="contactus.php">Contact Us</a></li>-->
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">Logged in as <b>username</b></a></li>
+                <li><a href="#">Logged in as a <b>user</b></a></li>
                 <li><a href="index.php?logout=1">Log out</a></li>
             </ul>
 
@@ -122,7 +123,8 @@
           </div>
         </div>
       </div>
-
+    
+    <script src="mynotes.js"></script>
     </body>
     
     </html>
