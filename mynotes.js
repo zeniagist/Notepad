@@ -7,6 +7,10 @@ $(function(){
     url: "notes/loadnotes.php",
     success: function(data){
       $('#notes').html(data);
+    },
+    error: function(){
+        $('#alertContent').text("There was an error with the AJAX Call! Please try again.");
+        $('#alert').fadeIn();
     }
   });
 
@@ -37,7 +41,11 @@ $(function(){
                 
                 $("textarea").focus();
               }
-          }
+          },
+        error: function(){
+            $('#alertContent').text("There was an error with the AJAX Call! Please try again.");
+            $('#alert').fadeIn();
+        }
       });
   });
   
