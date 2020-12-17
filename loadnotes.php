@@ -10,4 +10,6 @@ include('connection.php');
 
 // show notes or alert message
 
+echo "<div>This is a note</div>";
+
 ?>
