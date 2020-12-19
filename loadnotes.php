@@ -30,7 +30,7 @@ if($result = mysqli_query($link, $sql)){
            echo "
                 <div class='note'>
                     <div class='col-xs-5 col-sm-3 delete'>
-                        <button class='btn btn-lg btn-danger'>delete</button>
+                        <button class='btn btn-lg btn-danger' style='width:100%'>delete</button>
                     </div>
                     
                     <div class='noteheader' id='$note_id'>
