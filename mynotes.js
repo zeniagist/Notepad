@@ -1,12 +1,14 @@
 $(function(){
   // define variables
   var activeNote = 0;
+  var editMode = false;
   
   // load notes on page load: AJAX Call to loadnotes.php
   $.ajax({
     url: "notes/loadnotes.php",
     success: function(data){
       $('#notes').html(data);
+      clickonNote();
     },
     error: function(){
         $('#alertContent').text("There was an error with the AJAX Call! Please try again.");
@@ -84,6 +86,8 @@ $(function(){
             $("#notes").show();
             $("#addNote").show();
             $("#edit").show();
+            
+            clickonNote();
         },
         error: function(){
             $('#alertContent').text("There was an error with the AJAX Call! Please try again.");
@@ -92,12 +96,35 @@ $(function(){
     });
   });
 
-
   // click on done after editing: load notes again
   // click on edit: go to edit mode show: delete buttons, ...
-
+    
+    
   // functions
     // click on a note
+    function clickonNote(){
+        $(".noteheader").click(function(){
+            if(!editMode){
+                // update activeNote variable to the id of note
+                activeNote = $(this).attr("id");
+                
+                // fill text area
+                $("textarea").val($(this).find('.text').text());
+                
+                // show elements
+                $("#notepad").show();
+                $("#allNotes").show();
+                
+                // hide elements
+                $("#notes").hide();
+                $("#addNote").hide();
+                $("#edit").hide();
+                
+                $("textarea").focus();
+            }
+        });
+    }
+    
     // click on delete
     // show hide function
     // function showHide(array1, array2){
@@ -109,5 +136,4 @@ $(function(){
     //       $(array2[i]).hide();
     //     }
     // }
-    
 });
