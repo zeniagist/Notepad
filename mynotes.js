@@ -97,6 +97,21 @@ $(function(){
   });
 
   // click on done after editing: load notes again
+  $("#edit").click(function(){
+    //   switch to edit mode
+      editMode = true;
+      
+    //   reduve the width of notes
+    $(".noteheader").addClass("col-xs-7 col-sm-9");
+    
+    // hide elements
+    $("#edit").hide();
+    
+    // show elements
+    $("#done").show();
+    $(".delete").show();
+  });
+  
   // click on edit: go to edit mode show: delete buttons, ...
     
     
