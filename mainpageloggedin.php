@@ -31,7 +31,7 @@ if(!$_SESSION['user_id']) {
             margin-top:120px;
           }
 
-          #allNotes, #done, #notepad{
+          #allNotes, #done, #notepad, .delete{
             display: none;
           }
 
