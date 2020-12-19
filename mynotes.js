@@ -32,7 +32,6 @@ $(function(){
                 // show elements
                 $("#notepad").show();
                 $("#allNotes").show();
-                $("#done").show();
                 
                 // hide elements
                 $("#notes").hide();
@@ -51,6 +50,29 @@ $(function(){
   
   // type note:  AJAX Call to updatenote.php
   // click on all notes button
+  $("#allNotes").click(function(){
+    $.ajax({
+        url: "notes/loadnotes.php",
+        success: function(data){
+          $('#notes').html(data);
+          
+            // hide elements
+            $("#notepad").hide();
+            $("#allNotes").hide();
+            
+            // show elements
+            $("#notes").show();
+            $("#addNote").show();
+            $("#edit").show();
+        },
+        error: function(){
+            $('#alertContent').text("There was an error with the AJAX Call! Please try again.");
+            $('#alert').fadeIn();
+        }
+    });
+  });
+
+
   // click on done after editing: load notes again
   // click on edit: go to edit mode show: delete buttons, ...
 
