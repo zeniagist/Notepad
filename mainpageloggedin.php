@@ -31,7 +31,7 @@ if(!$_SESSION['user_id']) {
             margin-top:120px;
           }
 
-          #allNotes, #done, #notepad{
+          #allNotes, #done, #notepad, .delete{
             display: none;
           }
 
@@ -101,7 +101,12 @@ if(!$_SESSION['user_id']) {
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">Logged in as a <b>user</b></a></li>
+                <li><a href="#">Logged in as 
+                <b>
+                    <?php
+                        echo $_SESSION['username'];
+                    ?>
+                </b></a></li>
                 <li><a href="index.php?logout=1">Log out</a></li>
             </ul>
 
