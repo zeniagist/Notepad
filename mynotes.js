@@ -9,6 +9,7 @@ $(function(){
     success: function(data){
       $('#notes').html(data);
       clickonNote();
+      clickonDelete();
     },
     error: function(){
         $('#alertContent').text("There was an error with the AJAX Call! Please try again.");
@@ -54,20 +55,20 @@ $(function(){
   $("textarea").keyup(function(){
     // ajax call to update the task of id activeNote
     $.ajax({
-    url: "notes/updatenote.php",
-    type: "POST",
-    // send the current note content with its id to the php file
-    data: {note: $(this).val(), id:activeNote},
-    success: function(data){
-      if(data == 'error'){
-        $('#alertContent').text("There was an issue updating the notes in the database!");
-        $('#alert').fadeIn();
-      }
-    },
-    error: function(){
-        $('#alertContent').text("There was an error with the AJAX Call! Please try again.");
-        $('#alert').fadeIn();
-    }
+        url: "notes/updatenote.php",
+        type: "POST",
+        // send the current note content with its id to the php file
+        data: {note: $(this).val(), id:activeNote},
+        success: function(data){
+          if(data == 'error'){
+            $('#alertContent').text("There was an issue updating the notes in the database!");
+            $('#alert').fadeIn();
+          }
+        },
+        error: function(){
+            $('#alertContent').text("There was an error with the AJAX Call! Please try again.");
+            $('#alert').fadeIn();
+        }
     });
   });
   
@@ -88,6 +89,7 @@ $(function(){
             $("#edit").show();
             
             clickonNote();
+            clickonDelete();
         },
         error: function(){
             $('#alertContent').text("There was an error with the AJAX Call! Please try again.");
@@ -141,6 +143,33 @@ $(function(){
     }
     
     // click on delete
+    function clickonDelete(){
+        $(".delete").click(function(){
+            var deleteButton = $(this);
+            
+            // send ajax call to delete note
+            $.ajax({
+                url: "notes/deletenote.php",
+                type: "POST",
+                // send the id to the php file
+                data: {id:deleteButton.next().attr("id")},
+                success: function(data){
+                  if(data == 'error'){
+                    $('#alertContent').text("There was an issue updating the notes in the database!");
+                    $('#alert').fadeIn();
+                  }else{
+                    //   remove containing div
+                    deleteButton.parent().remove();
+                  }
+                },
+                error: function(){
+                    $('#alertContent').text("There was an error with the AJAX Call! Please try again.");
+                    $('#alert').fadeIn();
+                }
+            });
+        });
+    }
+    
     // show hide function
     // function showHide(array1, array2){
     //     for(i=0; i<array.length; i++){
