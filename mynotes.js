@@ -97,13 +97,28 @@ $(function(){
         }
     });
   });
+  
+  // click on done after editing: load notes again 
+  $("#done").click(function(){
+    //   switch to non edit mode
+        editMode = false;
+      
+        $(".noteheader").removeClass("col-xs-7 col-sm-9");
+      
+      // hide elements
+        $("#edit").show();
+    
+        // show elements
+        $("#done").hide();
+        $(".delete").hide();
+  });
 
-  // click on done after editing: load notes again
+    // click on edit: go to edit mode show: delete buttons, ...
   $("#edit").click(function(){
     //   switch to edit mode
       editMode = true;
       
-    //   reduve the width of notes
+    //   reduce the width of notes
     $(".noteheader").addClass("col-xs-7 col-sm-9");
     
     // hide elements
@@ -113,9 +128,6 @@ $(function(){
     $("#done").show();
     $(".delete").show();
   });
-  
-  // click on edit: go to edit mode show: delete buttons, ...
-    
     
   // functions
     // click on a note
