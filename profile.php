@@ -1,3 +1,34 @@
+<?php
+session_start();
+
+if(!$_SESSION['user_id']) {
+ header('Location: index.php');
+ exit;
+}
+
+include('connection.php');
+
+$user_id = $_SESSION['user_id'];
+
+//get username and email
+$sql = "SELECT * FROM users WHERE user_id='$user_id'";
+$result = mysqli_query($link, $sql);
+if(!$result){
+    echo "error when selecting user_id from users table!";
+}
+
+$count = mysqli_num_rows($result);
+
+if(!$count){
+  echo '<div class="alert alert-danger">That email is not associated with a user. Would you like to register an account?</div>';
+  exit;
+}
+
+$row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+$username = $row['username'];
+$email = $row['email'];
+
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -47,14 +78,20 @@
           <div class="navbar-collapse collapse" id="navbarCollapse">
             <ul class="nav navbar-nav">
               <li class="active"><a href="profile.php">Profile</a></li>
-              <li><a href="#">Help</a></li>
-              <li><a href="#">Contact Us</a></li>
+              <!--<li><a href="#">Help</a></li>-->
+              <!--<li><a href="#">Contact Us</a></li>-->
               <li><a href="mainpageloggedin.php">My Notes</a></li>
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">Logged in as <b>username</b></a></li>
-                <li><a href="#">Log out</a></li>
+                <li><a href="#profile.php">Logged in as 
+                <b>
+                    <?php
+                        echo $username;
+                    ?>
+                </b>
+                </a></li>
+                <li><a href="index.php?logout=1">Log out</a></li>
             </ul>
 
           </div>
@@ -72,7 +109,11 @@
               <table class="table table-hover table-condensed table-bordered">
                 <tr data-target="#updateusername" data-toggle="modal">
                   <td>Username</td>
-                  <td>value</td>
+                  <td>
+                  <?php
+                        echo $username;
+                  ?>
+                  </td>
                 </tr>
 
                 <tr data-target="#updateemail" data-toggle="modal">
@@ -117,13 +158,13 @@
 
               <div class="modal-body">
                 
-              <div id="loginMessage">
-                <!-- Login message from PHP File -->
+              <div id="updateUsernameMessage">
+                <!-- Update Username message from PHP File -->
               </div>
 
                 <div class="form-group">
                   <label for="username">Username:</label>
-                  <input class="form-control" type="text" name="username" id="username" maxlength="30" value="username value">
+                  <input class="form-control" type="text" name="username" id="username" maxlength="30" value="<?php echo $_SESSION['username'];?>">
                 </div>
 
               </div>
@@ -151,8 +192,8 @@
 
               <div class="modal-body">
                 
-              <div id="loginMessage">
-                <!-- Login message from PHP File -->
+              <div id="updateEmailMessage">
+                <!-- Update email message from PHP File -->
               </div>
 
                 <div class="form-group">
@@ -185,8 +226,8 @@
 
               <div class="modal-body">
                 
-              <div id="loginMessage">
-                <!-- Login message from PHP File -->
+              <div id="updatePasswordMessage">
+                <!-- Update Email message from PHP File -->
               </div>
 
                 <div class="form-group">
@@ -215,7 +256,7 @@
           </div>
         </div>
       </form>
-
+        <script src="profile/profile.js"></script>
     </body>
     
     </html>
