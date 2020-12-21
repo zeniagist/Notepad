@@ -12,7 +12,7 @@ $invalidPassword='<p><strong>Your password should be at least 6 characters long 
 $differentPassword='<p><strong>Passwords must match!</strong></p>';
 $missingPassword2='<p><strong>Please confirm a password!</strong></p>';
 
-//Get passwords
+//Get current password
 if(!$_POST["currentpassword"]){
     $errors .= $missingCurrentPassword;
 }else{
@@ -39,22 +39,49 @@ if(!$_POST["currentpassword"]){
       exit;
     }
     $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-    
+    echo "hello";
     if($currentPassword !== $row['password']){
         $errors .= '<p><strong>Incorrect current password!</strong></p>';
     }
-    
-    
+    echo "hello2";
+}
+
+//Get new passwords
+if(!$_POST["password"]){
+  $errors .= $missingPassword;
+}elseif(!(strlen($_POST["password"])>=6 
+        and preg_match('/[A-Z]/',$_POST["password"])
+        and preg_match('/[1-9]/',$_POST["password"])
+)){
+  $errors .= $invalidPassword;
+}else{
+  $password = filter_var($_POST["password"], FILTER_SANITIZE_STRING);
+  if(!$_POST["password2"]){
+    $errors .= $missingPassword2;
+  }else{
+    $password2 = filter_var($_POST["password2"], FILTER_SANITIZE_STRING);
+    if($password !== $password2){
+      $errors .= $differentPassword;
+    }
+  }
 }
 
 //If there are any errors print error
 if($errors){
   $resultMessage = '<div class="alert alert-danger">' . $errors . '</div>';
   echo $resultMessage;
-  exit;
+}else{
+    $password = mysqli_real_escape_string($link, $password);
+    $password = hash('sha256', $password);
+    
+    // else run query and update password
+    $sql = "UPDATE users SET password='$password' WHERE user_id='$user_id'";
+    $result = mysqli_query($link, $sql);
+    
+    if(!$result){
+        echo "<div class='alert alert-danger'>The password could not be reset please try again later!</div>";
+    }else{
+         echo "<div class='alert alert-success'>The new password has been updated successfully!</div>";
+    }
 }
-
-// check for errors
-// if error print error message
-// else run query and update password
 ?>
