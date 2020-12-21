@@ -38,7 +38,7 @@ $("#updatepasswordform").submit(function(event){
 
   //send them to signup.php using AJAX
   $.ajax({
-    url: "profile/updateusername.php",
+    url: "profile/updatepassword.php",
     type: "POST",
     data: datatopost,
     // AJAX Call successful
@@ -55,3 +55,28 @@ $("#updatepasswordform").submit(function(event){
 });
 
 // AJAX Call to updateemail.php
+$("#updateemailform").submit(function(event){
+  //prevent default php processing
+  event.preventDefault();
+
+  //collect user inputs
+  var datatopost = $(this).serializeArray();
+  // console.log(datatopost);
+
+  //send them to signup.php using AJAX
+  $.ajax({
+    url: "profile/updateemail.php",
+    type: "POST",
+    data: datatopost,
+    // AJAX Call successful
+    success: function(data){
+      if(data){
+        $("#updateEmailMessage").html(data);
+      }
+    },
+    // AJAX Call fails: show error AJAX Call error
+    error: function(){
+      $("#updateEmailMessage").html("<div class='alert alert-danger'>There was an error with the update username AJAX Call. Please try again later</div>");
+    }
+  });
+});
