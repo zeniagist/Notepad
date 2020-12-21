@@ -40,7 +40,7 @@ if(!$result){
         //If email & password don't match print error
 $count = mysqli_num_rows($result);
 
-if($count == 1){
+if(!$count == 1){
     echo '<div class="alert alert-danger">Wrong Username or Password</div>';
 }
 else {
