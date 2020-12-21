@@ -9,7 +9,7 @@ $("#updateusernameform").submit(function(event){
 
   //send them to signup.php using AJAX
   $.ajax({
-    url: "updateusername.php",
+    url: "profile/updateusername.php",
     type: "POST",
     data: datatopost,
     // AJAX Call successful
@@ -22,11 +22,36 @@ $("#updateusernameform").submit(function(event){
     },
     // AJAX Call fails: show error AJAX Call error
     error: function(){
-      $("#updateUsernameMessage").html("<div class='alert alert-danger'>There was an error with the AJAX Call. Please try again later</div>");
+      $("#updateUsernameMessage").html("<div class='alert alert-danger'>There was an error with the update username AJAX Call. Please try again later</div>");
     }
   });
 });
 
 // AJAX Call to updatepassword.php
+$("#updatepasswordform").submit(function(event){
+  //prevent default php processing
+  event.preventDefault();
+
+  //collect user inputs
+  var datatopost = $(this).serializeArray();
+  // console.log(datatopost);
+
+  //send them to signup.php using AJAX
+  $.ajax({
+    url: "profile/updateusername.php",
+    type: "POST",
+    data: datatopost,
+    // AJAX Call successful
+    success: function(data){
+      if(data){
+        $("#updatePasswordMessage").html(data);
+      }
+    },
+    // AJAX Call fails: show error AJAX Call error
+    error: function(){
+      $("#updatePasswordMessage").html("<div class='alert alert-danger'>There was an error with the update username AJAX Call. Please try again later</div>");
+    }
+  });
+});
 
 // AJAX Call to updateemail.php
