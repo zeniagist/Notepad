@@ -82,6 +82,7 @@ $(function(){
             // hide elements
             $("#notepad").hide();
             $("#allNotes").hide();
+            $("#done").hide();
             
             // show elements
             $("#notes").show();
@@ -123,10 +124,12 @@ $(function(){
     
     // hide elements
     $("#edit").hide();
+    $("#addNote").hide();
     
     // show elements
     $("#done").show();
     $(".delete").show();
+    $("#allNotes").show();
   });
     
   // functions

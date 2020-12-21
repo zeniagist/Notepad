@@ -2,14 +2,14 @@
 //Start session
 session_start();
 
-//logout
-include("logout.php");
-
 //Connect to the database
 include("connection.php");
 
+//logout
+include("logout.php");
+
 // rememberme
-include("rememberme.php");
+//include("rememberme.php");
 ?>
 
 <!DOCTYPE html>
@@ -38,7 +38,7 @@ include("rememberme.php");
       <nav rule="navigation" class="navbar navbar-custom navbar-fixed-top">
         <div class="container-fluid">
           <div class="navbar-header">
-            <a href="#" class="navbar-brand">Online Notes</a>
+            <a href="index.php" class="navbar-brand">Online Notes</a>
 
             <button type="button" class="navbar-toggle" data-target="#navbarCollapse" data-toggle="collapse">
               <span class="sr-only">Toggle Navigation</span>
@@ -50,9 +50,9 @@ include("rememberme.php");
 
           <div class="navbar-collapse collapse" id="navbarCollapse">
             <ul class="nav navbar-nav">
-              <li class="active"><a href="#">Home</a></li>
-              <li><a href="#">Help</a></li>
-              <li><a href="#">Contact Us</a></li>
+              <!--<li class="active"><a href="index.php">Home</a></li>-->
+              <!--<li><a href="#">Help</a></li>-->
+              <!--<li><a href="#">Contact Us</a></li>-->
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
@@ -112,15 +112,19 @@ include("rememberme.php");
                   <input class="form-control" type="password" name="loginpassword" id="loginpassword" placeholder="Password" maxlength="30">
                 </div>
 
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox" name="rememberme" id="rememberme">
-                    Remember me
-                  </label>
-
+                <!--<div class="checkbox">-->
+                <!--  <label>-->
+                <!--    <input type="checkbox" name="rememberme" id="rememberme">-->
+                <!--    Remember me-->
+                <!--  </label>-->
+                <!-- </div>-->
+                
+                <div>
                   <a class="pull-right" style="cursor: pointer" data-dismiss="modal" data-target="#forgotpasswordModal" data-toggle="modal">
                     Forgot Password?
                   </a>
+                  
+                  <br />
 
                 </div>
               </div>
@@ -217,7 +221,7 @@ include("rememberme.php");
         </div>
       </form>     
 
-      <script src="index.js"></script>
+      <script src="javascript.js"></script>
     </body>
     
     </html>

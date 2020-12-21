@@ -5,37 +5,15 @@ if(!$_SESSION['user_id']) {
  header('Location: index.php');
  exit;
 }
-
-include('connection.php');
-
-$user_id = $_SESSION['user_id'];
-
-//get username and email
-$sql = "SELECT * FROM users WHERE user_id='$user_id'";
-$result = mysqli_query($link, $sql);
-if(!$result){
-    echo "error when selecting user_id from users table!";
-}
-
-$count = mysqli_num_rows($result);
-
-if(!$count){
-  echo '<div class="alert alert-danger">Error</div>';
-  exit;
-}
-
-$row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-$username = $row['username'];
-$email = $row['email'];
-
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible"content="IE=edge">
         <meta name="viewport"content="width=device-width, initial-scale=1">
-        <title>Profile</title>
+        <title>Contact Us</title>
 
         <!-- Bootstrap -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -52,9 +30,12 @@ $email = $row['email'];
           #container{
             margin-top:100px;
           }
-
-          tr{
-            cursor: pointer;
+          textarea{
+            width: 100%;
+            max-width: 100%;
+            min-width: 100%;
+            font-size: 16px;
+            line-height: 1.5em;
           }
         </style>
 
@@ -77,20 +58,14 @@ $email = $row['email'];
 
           <div class="navbar-collapse collapse" id="navbarCollapse">
             <ul class="nav navbar-nav">
-              <li class="active"><a href="profile.php">Profile</a></li>
-              <!--<li><a href="#">Help</a></li>-->
-              <!--<li><a href="#">Contact Us</a></li>-->
+              <li><a href="profile.php">Profile</a></li>
+              <li><a href="#">Help</a></li>
+              <li class="active"><a href="contactus.php">Contact Us</a></li>
               <li><a href="mainpageloggedin.php">My Notes</a></li>
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#profile.php">Logged in as 
-                <b>
-                    <?php
-                        echo $username;
-                    ?>
-                </b>
-                </a></li>
+                <li><a href="#">Logged in as a <b>user</b></a></li>
                 <li><a href="index.php?logout=1">Log out</a></li>
             </ul>
 
@@ -103,36 +78,69 @@ $email = $row['email'];
         <div class="row">
           <div class="col-md-offset-3 col-md-6">
 
-            <h2>General Account Settings:</h2>
-
-            <div class="table-responsive">
-              <table class="table table-hover table-condensed table-bordered">
-                <tr data-target="#updateusername" data-toggle="modal">
-                  <td>Username</td>
-                  <td>
-                  <?php
-                        echo $username;
-                  ?>
-                  </td>
-                </tr>
-
-                <tr data-target="#updateemail" data-toggle="modal">
-                  <td>Email</td>
-                  <td>
-                  <?php
-                        echo $email;
-                  ?>
-                  </td>
-                </tr>
-
-                <tr data-target="#updatepassword" data-toggle="modal">
-                  <td>Password</td>
-                  <td>hidden</td>
-                </tr>
-
-              </table>
-            </div>
-
+            <h2>Contact Us:</h2>
+            <aside>
+               <p>
+                   We would <em>love</em> to hear from you! </p>
+                   <p>Please use the <b><em>Contact Form</em></b>
+                   to send us a message.
+               </p>
+           </aside>
+           
+           <div><br /></div>
+           
+            <form id="contact-form" name="contact-form" action="mail.php" method="POST">
+                <div class="row">
+    
+                    <!--Grid column-->
+                    <div class="col-md-6">
+                        <div class="md-form mb-0">
+                            <label for="name" class="">Your name</label>
+                            <input type="text" id="name" name="name" class="form-control">
+                        </div>
+                    </div>
+                    <!--Grid column-->
+    
+                    <!--Grid column-->
+                    <div class="col-md-6">
+                        <div class="md-form mb-0">
+                            <label for="email" class="">Your email</label>
+                            <input type="text" id="email" name="email" class="form-control">
+                        </div>
+                    </div>
+                    <!--Grid column-->
+    
+                </div>
+                <!--Grid row-->
+    
+                <!--Grid row-->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="md-form mb-0">
+                            <label for="subject" class="">Subject</label>
+                            <input type="text" id="subject" name="subject" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <!--Grid row-->
+    
+                <!--Grid row-->
+                <div class="row">
+    
+                    <!--Grid column-->
+                    <div class="col-md-12">
+    
+                        <div class="md-form">
+                            <label for="message">Your message</label>
+                            <textarea type="text" id="message" name="message" rows="10"></textarea>
+                        </div>
+    
+                    </div>
+                </div>
+            </form>
+            
+            <a class="btn btn-primary" onclick="validateForm();">Send</a>
+            
           </div>
         </div>
       </div>      
@@ -141,10 +149,10 @@ $email = $row['email'];
       <div class="footer">
         <div class="container">
           <p>Zenia Gist Copyright&copy; 2020-
-            <?php 
+            <!-- <?php 
               $today = date("Y");
               echo $today;
-            ?>
+            ?> -->
           .</p>
         </div>
       </div>
@@ -162,13 +170,13 @@ $email = $row['email'];
 
               <div class="modal-body">
                 
-              <div id="updateUsernameMessage">
-                <!-- Update Username message from PHP File -->
+              <div id="loginMessage">
+                <!-- Login message from PHP File -->
               </div>
 
                 <div class="form-group">
                   <label for="username">Username:</label>
-                  <input class="form-control" type="text" name="username" id="username" maxlength="30" value="<?php echo $_SESSION['username'];?>">
+                  <input class="form-control" type="text" name="username" id="username" maxlength="30" value="username value">
                 </div>
 
               </div>
@@ -196,13 +204,13 @@ $email = $row['email'];
 
               <div class="modal-body">
                 
-              <div id="updateEmailMessage">
-                <!-- Update email message from PHP File -->
+              <div id="loginMessage">
+                <!-- Login message from PHP File -->
               </div>
 
                 <div class="form-group">
                   <label for="email">Email:</label>
-                  <input class="form-control" type="email" name="email" id="email" maxlength="50" value="<?php echo "$email";?>">
+                  <input class="form-control" type="email" name="email" id="email" maxlength="50" value="email value">
                 </div>
 
               </div>
@@ -230,8 +238,8 @@ $email = $row['email'];
 
               <div class="modal-body">
                 
-              <div id="updatePasswordMessage">
-                <!-- Update Email message from PHP File -->
+              <div id="loginMessage">
+                <!-- Login message from PHP File -->
               </div>
 
                 <div class="form-group">
@@ -260,7 +268,37 @@ $email = $row['email'];
           </div>
         </div>
       </form>
-        <script src="profile/profile.js"></script>
     </body>
     
+    <script>
+        function validateForm() {
+  var name =  document.getElementById('name').value;
+  if (name == "") {
+      document.querySelector('.status').innerHTML = "Name cannot be empty";
+      return false;
+  }
+  var email =  document.getElementById('email').value;
+  if (email == "") {
+      document.querySelector('.status').innerHTML = "Email cannot be empty";
+      return false;
+  } else {
+      var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      if(!re.test(email)){
+          document.querySelector('.status').innerHTML = "Email format invalid";
+          return false;
+      }
+  }
+  var subject =  document.getElementById('subject').value;
+  if (subject == "") {
+      document.querySelector('.status').innerHTML = "Subject cannot be empty";
+      return false;
+  }
+  var message =  document.getElementById('message').value;
+  if (message == "") {
+      document.querySelector('.status').innerHTML = "Message cannot be empty";
+      return false;
+  }
+  document.querySelector('.status').innerHTML = "Sending...";
+}
+    </script>
     </html>
