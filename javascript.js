@@ -61,7 +61,6 @@ $("#forgotpasswordform").submit(function(event){
 
   //collect user inputs
   var datatopost = $(this).serializeArray();
-
   //send them to forgotpassword.php using AJAX
   $.ajax({
     url: "forgotpassword.php",
@@ -76,4 +75,4 @@ $("#forgotpasswordform").submit(function(event){
       $("#forgotpasswordmessage").html("<div class='alert alert-danger'>There was an error with the AJAX Call. Please try again later</div>");
     }
   });
-});  
+});

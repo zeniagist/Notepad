@@ -94,14 +94,14 @@ if(!$_SESSION['user_id']) {
 
           <div class="navbar-collapse collapse" id="navbarCollapse">
             <ul class="nav navbar-nav">
-              <li class="active"><a href="mainpageloggedin.php">My Notes</a></li>
               <li><a href="profile.php">Profile</a></li>
               <!--<li><a href="#">Help</a></li>-->
               <!--<li><a href="contactus.php">Contact Us</a></li>-->
+              <li class="active"><a href="mainpageloggedin.php">My Notes</a></li>
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">Logged in as 
+                <li><a href="#profile.php">Logged in as 
                 <b>
                     <?php
                         echo $_SESSION['username'];

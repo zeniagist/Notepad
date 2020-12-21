@@ -10,7 +10,7 @@ $id = $_SESSION['user_id'];
 $username = $_POST['username'];
 
 // Run query and update username
-$sql = "UPDATE users SET username='$username' WHERE user_id='$user_id'";
+$sql = "UPDATE users SET username='$username' WHERE user_id='$id'";
 $result = mysqli_query($link, $sql);
 
 if(!$result){

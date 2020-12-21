@@ -9,7 +9,7 @@ $user_id = $_SESSION['user_id'];
 $time = time();
 
 // run a query to create new note
-$sql = "INSERT INTO notes (user_id, note, time) VALUE ('$user_id', '', '$time')";
+$sql = "INSERT INTO notes (user_id, note, time) VALUES ('$user_id', '', '$time')";
 $result = mysqli_query($link, $sql);
 
 if(!$result){

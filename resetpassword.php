@@ -38,9 +38,11 @@ include('connection.php');
       <div class="row">
         <div class="col-sm-offset-1 col-sm-10 contactForm">
           <h1>Reset Password</h1>
+          
+          <div id="resultmessage"></div>
 
           <?php
-          // if user_id or activation key is missing
+          // if user_id or reset key is missing
           if(!$_GET['user_id'] || !$_GET['key']){
             echo '<div class="alert alert-danger">There was an error. Please click on the link you received by email\n\nPlease check your spam folder.</div>';
             exit;
@@ -58,7 +60,7 @@ include('connection.php');
           $key = mysqli_real_escape_string($link, $key);
 
           // Run query: check combination of user_id & key exists and less than 24 hour old
-          $sql = "SELECT user_id FROM forgotpassword WHERE user_id='28' AND time > '$time'";
+          $sql = "SELECT user_id FROM forgotpassword WHERE user_id='$user_id' AND time > '$time' AND status='pending'";
           $result = mysqli_query($link, $sql);
 
           if(!$result){
@@ -73,9 +75,8 @@ include('connection.php');
               echo '<div class="alert alert-danger">Please try again!</div>';
               exit;
           }
-
-          // print reset password form with hidden user_id and key fields
-          echo "
+          ?>
+          
           <form method='post' id='passwordreset'>
             <input type='hidden' name='key' value='$key'>
             <input type='hidden' name='user_id' value='$user_id'>
@@ -91,8 +92,7 @@ include('connection.php');
 
             </div>
           </form>
-          ";
-          ?>
+          
         </div>
       </div>
     </div>
