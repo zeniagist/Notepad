@@ -45,20 +45,20 @@ $email = $row['email'];
 $activationKey = bin2hex(openssl_random_pseudo_bytes(16));
 
 // insert new activation code in the users table
-$sql = "UPDATE users SET activation2='$activationKey' WHERE user_id='$user_id'";
+$sql = "UPDATE users SET email='$newemail' WHERE user_id='$user_id'";
 $result = mysqli_query($link, $sql);
 if(!$result){
   echo '<div class="alert alert-danger">There was an error inserting the activation2 details in the database!</div>';
-  exit; 
-}echo "hello";
-
-// send email to user with link to activatenewemail.php with current email, new email, and activation code
-$message = "Please click on this link to activate this email: \n\n";
-$message .= "Do not reply to this email \n\n";
-$message .= "http://zeniagist.com/projects/onlinenotesapp/activatenewemail.php?email=" . urlencode($email) . "&newemail=" . urlencode($newemail) . "&key=$activationKey";
-$emailSent = mail($newemail, 'Email update for your Online Notes App', $message, 'From:' . 'zeniagi1@zeniagist.com');
-
-if($emailSent){
-  echo "<div class='alert alert-success'>Thank you for registering!<br />A confirmation email has been sent to $newemail. Please check your spam folder and click on the activiation link to reset your email.<br /></div>";
+}else{
+    echo "<div class='alert alert-success'>Thank you for updating your email!<br />You new login email is $newemail.<br />Please log out to see these changes.<br /></div>";
 }
+// send email to user with link to activatenewemail.php with current email, new email, and activation code
+// $message = "Please click on this link to activate this email: \n\n";
+// $message .= "Do not reply to this email \n\n";
+// $message .= "http://zeniagist.com/projects/onlinenotesapp/activatenewemail.php?email=" . urlencode($email) . "&newemail=" . urlencode($newemail) . "&key=$activationKey";
+// $emailSent = mail($newemail, 'Email update for your Online Notes App', $message, 'From:' . 'zeniagi1@zeniagist.com');
+
+// if($emailSent){
+//   echo "<div class='alert alert-success'>Thank you for registering!<br />A confirmation email has been sent to $newemail. Please check your spam folder and click on the activiation link to reset your email.<br /></div>";
+// }
 ?>
